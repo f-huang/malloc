@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   realloc.c                                          :+:      :+:    :+:   */
+/*   chunk_add.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/05 18:42:20 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/06 15:59:34 by fhuang           ###   ########.fr       */
+/*   Created: 2017/10/06 18:47:31 by fhuang            #+#    #+#             */
+/*   Updated: 2017/10/06 18:54:32 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/mman.h>
-#include <stddef.h>
+#include "malloc.h"
 
-void	*realloc(void *ptr, size_t size)
+void	chunk_add(void *ptr, size_t size)
 {
-	if (!ptr)
-		return (NULL);
-	(void)size;
-	return (ptr);
+	t_chunk	*new;
+
+	if (g_memory.chunk_list == NULL)
+	{
+
+	}
+	else
+	{
+
+	}
 }

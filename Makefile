@@ -6,7 +6,7 @@
 #    By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 15:45:39 by fhuang            #+#    #+#              #
-#    Updated: 2017/10/05 16:10:34 by fhuang           ###   ########.fr        #
+#    Updated: 2017/10/06 16:04:05 by fhuang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,18 +16,23 @@ ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
-PROG1	:=	libft_malloc_$(HOSTTYPE).so
+NAME	:=	libft_malloc_$(HOSTTYPE).so
 # ====================
 
 # ===== Standard =====
 CC		:=	clang -pipe
 CFLAGS	:=	-Wall -Wextra -Werror -g3
+INDEPFLAGS	:= -fPIC
+SOFLAGS	:=	-shared
 SRCDIR	:=	src/
 OBJDIR	:=	obj/
 BINDIR	:=	bin/
 INCDIR	:=	include/
 LIBDIR	:=	libft/
-SRC		:=	$(SRCDIR)malloc.c
+SRC		:=	$(SRCDIR)free.c						\
+			$(SRCDIR)get_size_to_allocate.c		\
+			$(SRCDIR)malloc.c					\
+			$(SRCDIR)realloc.c
 OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 INC		:=	-I./$(INCDIR) -I./$(LIBDIR)$(INCDIR)
 LIBPATH	:=	-L./$(LIBDIR)lib -lft -lftprintf
@@ -52,10 +57,14 @@ WHITE		= "\033[0;37m"
 .PHONY: all libft norme clean fclean re link_malloc
 .SILENT:
 
-all: libft link_malloc
+all: $(NAME)
+
+$(NAME): libft $(OBJ)
+	$(CC) $(SOFLAGS) $(CFLAGS) $(OBJ) -o $@ $(LIBPATH) $(LIB)$(INC)
+	echo $(GREEN)" $@ compiled !"$(EOC)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
-	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
+	$(CC) $(CFLAGS) $(INDEPFLAGS) -c $< -o $@ $(INC)
 	printf $(GREEN)"|"$(EOC)
 
 $(CACHEF):
@@ -67,7 +76,7 @@ $(CACHEF):
 
 link_malloc:
 	echo $(HOSTTYPE)
-	ln -s libft_malloc_$(HOSTTYPE).so $(PROG1)
+	ln -s libft_malloc_$(HOSTTYPE).so $(NAME)
 
 libft:
 	make -C $(LIBDIR)
@@ -83,7 +92,7 @@ clean:
 
 fclean: clean
 	make -C $(LIBDIR) fclean
-	rm -f $(PROG1)
-	printf $(RED)"$(PROG1) removed\n"$(EOC)
+	rm -f $(NAME)
+	printf $(RED)"$(NAME) removed\n"$(EOC)
 
 re: fclean all

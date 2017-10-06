@@ -6,11 +6,11 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/05 18:43:14 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/05 18:43:40 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/06 15:58:37 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/man.h>
+#include <sys/mman.h>
 #include <stddef.h>
 
 void	free(void *ptr)
