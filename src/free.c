@@ -6,15 +6,17 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/05 18:43:14 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/06 15:58:37 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/09 20:53:17 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/mman.h>
-#include <stddef.h>
+#include "malloc.h"
+
+extern t_memory	g_memory;
 
 void	free(void *ptr)
 {
 	if (!ptr)
 		return ;
+	chunk_remove(ptr, 1);
 }

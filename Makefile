@@ -6,7 +6,7 @@
 #    By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 15:45:39 by fhuang            #+#    #+#              #
-#    Updated: 2017/10/06 16:04:05 by fhuang           ###   ########.fr        #
+#    Updated: 2017/10/09 22:21:41 by fhuang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,10 +29,17 @@ OBJDIR	:=	obj/
 BINDIR	:=	bin/
 INCDIR	:=	include/
 LIBDIR	:=	libft/
-SRC		:=	$(SRCDIR)free.c						\
+SRC		:=	$(SRCDIR)allocate_memory.c			\
+			$(SRCDIR)chunk_add.c				\
+			$(SRCDIR)chunk_remove.c				\
+			$(SRCDIR)chunk_split.c				\
+			$(SRCDIR)free.c						\
+			$(SRCDIR)get_chunk_type.c			\
+			$(SRCDIR)get_type_name.c			\
 			$(SRCDIR)get_size_to_allocate.c		\
 			$(SRCDIR)malloc.c					\
-			$(SRCDIR)realloc.c
+			$(SRCDIR)realloc.c					\
+			$(SRCDIR)show_alloc_mem.c
 OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 INC		:=	-I./$(INCDIR) -I./$(LIBDIR)$(INCDIR)
 LIBPATH	:=	-L./$(LIBDIR)lib -lft -lftprintf

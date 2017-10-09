@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_type_name.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/06 15:52:10 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/09 23:41:31 by fhuang           ###   ########.fr       */
+/*   Created: 2017/10/09 22:14:01 by fhuang            #+#    #+#             */
+/*   Updated: 2017/10/09 22:25:54 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-// #include <stdlib.h>
-int		main(void)
+
+const char	*get_type_name(enum e_chunk_type type)
 {
-	malloc(0);
-	malloc(128);
-	malloc(1024);
-	malloc(1025);
-	show_alloc_mem();
-	return (0);
+	if (type == TINY)
+		return ("TINY");
+	else if (type == SMALL)
+		return ("SMALL");
+	else
+		return ("LARGE");
 }
