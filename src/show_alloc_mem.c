@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 15:31:48 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/09 23:41:15 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/10 21:52:09 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	print_memory_depending_on_type(enum e_chunk_type type)
 {
 	t_chunk		*iterator;
 	int			first;
+	int			address;
 
 	first = 1;
 	iterator = g_memory.list_head;
@@ -28,7 +29,8 @@ static void	print_memory_depending_on_type(enum e_chunk_type type)
 		{
 			if (first && !(first = 0))
 				printf("%s : %p\n", get_type_name(type), iterator);
-			printf("%p - %p : %zu octets\n", iterator, iterator + iterator->size, iterator->size);
+			address = ((iterator + iterator->size) - iterator) / 24;
+			printf("%p - %p : %zu octets\n", iterator, iterator + address, iterator->size);
 		}
 		iterator = iterator->next;
 	}

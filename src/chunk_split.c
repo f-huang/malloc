@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 19:17:08 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/09 23:41:03 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/10 21:48:05 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ void			*chunk_split(size_t size)
 		return (NULL);
 	if ((remaining_space = unused_chunk->size - size))
 	{
-		chunk_add(unused_chunk + size, remaining_space, unused_chunk->type);
+		chunk_add(unused_chunk + 1, remaining_space, unused_chunk->type);
 	}
 	unused_chunk->size = size;
 	unused_chunk->type = get_chunk_type(size);
 	unused_chunk->is_used = 1;
+	printf("unused : %p\nunused + 1 : %p\nunused next: %p\nis_used : %p\n----------------------\n", unused_chunk, unused_chunk + 1, unused_chunk->next, &unused_chunk->is_used);
 	return (unused_chunk);
 }
