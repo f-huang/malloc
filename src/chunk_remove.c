@@ -5,43 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/09 19:00:58 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/09 20:52:25 by fhuang           ###   ########.fr       */
+/*   Created: 2017/10/12 14:37:17 by fhuang            #+#    #+#             */
+/*   Updated: 2017/10/12 19:35:09 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/mman.h>
 #include "malloc.h"
 
-extern t_memory	g_memory;
-
-static void	update_list_links(t_chunk **prev)
-{
-	if (!*prev)
-		g_memory.list_head = g_memory.list_head->next;
-	else
-	{
-		(*prev)->next = g_memory.list_head->next;
-		if (!g_memory.list_head->next)
-			g_memory.list_head = (*prev)->next;
-	}
-}
-
-void	chunk_remove(t_chunk *to_remove, int should_unmap)
+void	chunk_remove(t_chunk **list, t_chunk *needle)
 {
 	t_chunk		*iterator;
 	t_chunk		*prev;
 
-	iterator = g_memory.list_head;
 	prev = NULL;
-	while (iterator->next)
+	iterator = *list;
+	while (iterator)
 	{
-		if (iterator == to_remove)
+		if (iterator == needle)
 		{
-			if (should_unmap && to_remove->size > 0)
-				munmap(to_remove, to_remove->size);
-			update_list_links(&prev);
-			to_remove = NULL;
+			if (prev == NULL)
+				*list = iterator->next;
+			else
+				prev->next = iterator->next;
+			munmap(iterator, iterator->size);
+			iterator = NULL;
 			break ;
 		}
 		prev = iterator;

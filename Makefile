@@ -6,7 +6,7 @@
 #    By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 15:45:39 by fhuang            #+#    #+#              #
-#    Updated: 2017/10/09 22:21:41 by fhuang           ###   ########.fr        #
+#    Updated: 2017/10/12 17:19:11 by fhuang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,23 +28,24 @@ SRCDIR	:=	src/
 OBJDIR	:=	obj/
 BINDIR	:=	bin/
 INCDIR	:=	include/
-LIBDIR	:=	libft/
 SRC		:=	$(SRCDIR)allocate_memory.c			\
-			$(SRCDIR)chunk_add.c				\
 			$(SRCDIR)chunk_remove.c				\
-			$(SRCDIR)chunk_split.c				\
+			$(SRCDIR)chunk_add.c				\
+			$(SRCDIR)find_chunk.c				\
 			$(SRCDIR)free.c						\
 			$(SRCDIR)get_chunk_type.c			\
-			$(SRCDIR)get_type_name.c			\
+			$(SRCDIR)get_last_chunk.c			\
 			$(SRCDIR)get_size_to_allocate.c		\
+			$(SRCDIR)get_type_index.c			\
+			$(SRCDIR)get_type_name.c			\
+			$(SRCDIR)get_unused_chunk.c			\
 			$(SRCDIR)malloc.c					\
+			$(SRCDIR)print_chunk_list.c			\
 			$(SRCDIR)realloc.c					\
 			$(SRCDIR)show_alloc_mem.c
 OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
-INC		:=	-I./$(INCDIR) -I./$(LIBDIR)$(INCDIR)
-LIBPATH	:=	-L./$(LIBDIR)lib -lft -lftprintf
+INC		:=	-I./$(INCDIR)
 CACHEF	:=	.cache_exists
-RESULTF	:= result
 # ====================
 
 # ====== Colors ======
@@ -61,13 +62,13 @@ CYAN		= "\033[0;36m"
 WHITE		= "\033[0;37m"
 # ====================
 
-.PHONY: all libft norme clean fclean re link_malloc
+.PHONY: all norme clean fclean re link_malloc
 .SILENT:
 
 all: $(NAME)
 
-$(NAME): libft $(OBJ)
-	$(CC) $(SOFLAGS) $(CFLAGS) $(OBJ) -o $@ $(LIBPATH) $(LIB)$(INC)
+$(NAME): $(OBJ)
+	$(CC) $(SOFLAGS) $(CFLAGS) $(OBJ) -o $@ $(INC)
 	echo $(GREEN)" $@ compiled !"$(EOC)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
@@ -85,20 +86,15 @@ link_malloc:
 	echo $(HOSTTYPE)
 	ln -s libft_malloc_$(HOSTTYPE).so $(NAME)
 
-libft:
-	make -C $(LIBDIR)
-
 norme:
 	norminette $(SRCDIR) $(INCDIR) | grep -v Norme -B1 || true
 	norminette $(LIBFT)$(SRCDIR) $(LIBFT)$(INCDIR) | grep -v Norme -B1 || true
 
 clean:
-	make -C $(LIBDIR) clean
 	rm -rf $(OBJDIR) $(CACHEF) $(RESULTF)
 	printf $(YELLOW)"All objects removed\n"$(EOC)
 
 fclean: clean
-	make -C $(LIBDIR) fclean
 	rm -f $(NAME)
 	printf $(RED)"$(NAME) removed\n"$(EOC)
 

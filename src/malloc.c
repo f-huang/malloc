@@ -6,25 +6,26 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/05 14:48:00 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/09 23:38:12 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/12 19:12:30 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 #include <stdio.h>
-
-extern t_memory		g_memory;
-
+extern void		*g_memory[3];
 void	*malloc(size_t size)
 {
-	void	*ptr;
+	void				*ptr;
+	enum e_chunk_type	type;
 
 	if (size == 0)
 		return (NULL);
-	if (g_memory.space_left < size)
+	ptr = NULL;
+	type = get_chunk_type(size);
+	if (type == LARGE || !(ptr = get_unused_chunk(type)))
 		allocate_memory(size);
-	ptr = chunk_split(size);
+	ptr = get_unused_chunk(type == LARGE ? size : type);
 	if (ptr)
-		g_memory.space_left -= size;
+		((t_chunk*)ptr)->is_used = 1;
 	return (ptr);
 }

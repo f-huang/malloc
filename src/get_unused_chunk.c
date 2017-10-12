@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
+/*   get_unused_chunk.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/06 15:31:48 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/12 19:24:40 by fhuang           ###   ########.fr       */
+/*   Created: 2017/10/12 13:28:23 by fhuang            #+#    #+#             */
+/*   Updated: 2017/10/12 19:19:46 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-#include <stdio.h>
-
 extern void		*g_memory[3];
 
-static void	print_memory(enum e_type_index index)
+t_chunk	*get_unused_chunk(enum e_chunk_type type)
 {
-	print_chunk_list(g_memory[index]);
-}
+	enum e_type_index	i;
+	t_chunk				*iterator;
 
-void	show_alloc_mem(void)
-{
-	print_memory(iTINY);
-	print_memory(iSMALL);
-	print_memory(iLARGE);
+	i = get_type_index(type);
+	iterator = (t_chunk*)g_memory[i];
+	while (iterator)
+	{
+		if (!iterator->is_used && iterator->size == type)
+			return (iterator);
+		iterator = iterator->next;
+	}
+	return (iterator);
 }

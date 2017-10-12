@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
+/*   get_type_index.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/06 15:31:48 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/12 19:24:40 by fhuang           ###   ########.fr       */
+/*   Created: 2017/10/12 13:25:31 by fhuang            #+#    #+#             */
+/*   Updated: 2017/10/12 13:27:16 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-#include <stdio.h>
-
-extern void		*g_memory[3];
-
-static void	print_memory(enum e_type_index index)
+enum e_type_index	get_type_index(enum e_chunk_type type)
 {
-	print_chunk_list(g_memory[index]);
-}
-
-void	show_alloc_mem(void)
-{
-	print_memory(iTINY);
-	print_memory(iSMALL);
-	print_memory(iLARGE);
+	if (type == TINY)
+		return (iTINY);
+	else if (type == SMALL)
+		return (iSMALL);
+	else
+		return (iLARGE);
 }

@@ -5,28 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/06 18:47:31 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/09 22:59:24 by fhuang           ###   ########.fr       */
+/*   Created: 2017/10/12 12:14:41 by fhuang            #+#    #+#             */
+/*   Updated: 2017/10/12 19:18:38 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-#include<stdio.h>
-void	chunk_add(void *ptr, size_t size, enum e_chunk_type type)
+
+extern void	*g_memory[3];
+
+static void chunk_link(t_chunk **chunk_list)
 {
-	if (!ptr)
+	t_chunk		*iterator;
+	int			i;
+
+	iterator = get_last_chunk(*chunk_list);
+	if (!iterator)
 		return ;
-	if (g_memory.list_head == NULL)
+	i = 0;
+	while (i < 100)
 	{
-		g_memory.list_head = (t_chunk*)ptr;
-		g_memory.list_head->next = NULL;
+		iterator->next = iterator + 1;
+		iterator->next->size = iterator->size;
+		iterator->next->is_used = 0;
+		iterator->next->next = NULL;
+		iterator = iterator->next;
+		++i;
 	}
-	else
-		g_memory.list_tail->next = (t_chunk*)ptr;
-	g_memory.list_tail = (t_chunk*)ptr;
-	g_memory.list_tail->size = size;
-	g_memory.list_tail->is_used = 0;
-	g_memory.list_tail->type = type;
-	g_memory.list_tail->next = NULL;
-	// printf("------------Type = %i   -    %p\n", type, g_memory.list_tail);
+}
+
+static void	chunk_add_single(t_chunk **chunk_list, void *ptr)
+{
+	t_chunk		*last_chunk;
+
+	last_chunk = get_last_chunk(*chunk_list);
+	if (last_chunk)
+	{
+		last_chunk->next = ptr;
+		last_chunk->next->is_used = 0;
+		last_chunk->next->next = NULL;
+	}
+}
+
+void	chunk_add(void *ptr, size_t size)
+{
+	enum e_type_index	index;
+	enum e_chunk_type	type;
+
+	type = get_chunk_type(size);
+	index = get_type_index(type);
+	((t_chunk*)ptr)->size = size;
+	((t_chunk*)ptr)->is_used = 0;
+	((t_chunk*)ptr)->next = NULL;
+	if (!g_memory[index])
+		g_memory[index] = ptr;
+	if (size > SMALL)
+		chunk_add_single((t_chunk**)&g_memory[index], ptr);
+	if (size == TINY || size == SMALL)
+		chunk_link((t_chunk**)&g_memory[index]);
 }

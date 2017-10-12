@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
+/*   get_last_chunk.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/06 15:31:48 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/12 19:24:40 by fhuang           ###   ########.fr       */
+/*   Created: 2017/10/12 13:22:15 by fhuang            #+#    #+#             */
+/*   Updated: 2017/10/12 13:24:36 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-#include <stdio.h>
-
-extern void		*g_memory[3];
-
-static void	print_memory(enum e_type_index index)
+t_chunk	*get_last_chunk(t_chunk *list)
 {
-	print_chunk_list(g_memory[index]);
-}
+	t_chunk		*iterator;
 
-void	show_alloc_mem(void)
-{
-	print_memory(iTINY);
-	print_memory(iSMALL);
-	print_memory(iLARGE);
+	iterator = list;
+	while (iterator && iterator->next)
+		iterator = iterator->next;
+	return (iterator);
 }

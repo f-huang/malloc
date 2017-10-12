@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
+/*   find_chunk.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/06 15:31:48 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/12 19:24:40 by fhuang           ###   ########.fr       */
+/*   Created: 2017/10/12 14:05:12 by fhuang            #+#    #+#             */
+/*   Updated: 2017/10/12 17:07:12 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-
 #include <stdio.h>
-
-extern void		*g_memory[3];
-
-static void	print_memory(enum e_type_index index)
+t_chunk		*find_chunk(t_chunk *list, t_chunk *needle)
 {
-	print_chunk_list(g_memory[index]);
-}
+	t_chunk	*iterator;
 
-void	show_alloc_mem(void)
-{
-	print_memory(iTINY);
-	print_memory(iSMALL);
-	print_memory(iLARGE);
+	iterator = list;
+	while (iterator)
+	{
+		if (iterator == needle)
+			return (iterator);
+		iterator = iterator->next;
+	}
+	return (iterator == needle ? iterator : NULL);
 }

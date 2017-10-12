@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
+/*   print_chunk_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/06 15:31:48 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/12 19:24:40 by fhuang           ###   ########.fr       */
+/*   Created: 2017/10/12 17:12:46 by fhuang            #+#    #+#             */
+/*   Updated: 2017/10/12 19:09:56 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-
 #include <stdio.h>
 
-extern void		*g_memory[3];
-
-static void	print_memory(enum e_type_index index)
+void	print_chunk_list(t_chunk *list)
 {
-	print_chunk_list(g_memory[index]);
-}
+	t_chunk	*iterator = list;
 
-void	show_alloc_mem(void)
-{
-	print_memory(iTINY);
-	print_memory(iSMALL);
-	print_memory(iLARGE);
+	while (iterator)
+	{
+		if (iterator->is_used || iterator->size > SMALL)
+			printf("%p (%zu)\n", iterator, iterator ? iterator->size : 0);
+		iterator = iterator->next;
+	}
 }
