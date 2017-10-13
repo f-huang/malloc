@@ -6,7 +6,7 @@
 #    By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 15:45:39 by fhuang            #+#    #+#              #
-#    Updated: 2017/10/12 17:19:11 by fhuang           ###   ########.fr        #
+#    Updated: 2017/10/13 13:38:21 by fhuang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
-NAME	:=	libft_malloc_$(HOSTTYPE).so
+NAME		:=	libft_malloc_$(HOSTTYPE).so
+MALLOCLIB	:=	libft_malloc.so
 # ====================
 
 # ===== Standard =====
@@ -28,6 +29,8 @@ SRCDIR	:=	src/
 OBJDIR	:=	obj/
 BINDIR	:=	bin/
 INCDIR	:=	include/
+LIBFT	:=	libft/
+LIBDIR	:=	$(LIBFT)lib/
 SRC		:=	$(SRCDIR)allocate_memory.c			\
 			$(SRCDIR)chunk_remove.c				\
 			$(SRCDIR)chunk_add.c				\
@@ -44,7 +47,8 @@ SRC		:=	$(SRCDIR)allocate_memory.c			\
 			$(SRCDIR)realloc.c					\
 			$(SRCDIR)show_alloc_mem.c
 OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
-INC		:=	-I./$(INCDIR)
+INC		:=	-I./$(INCDIR) -I./$(LIBFT)$(INCDIR)
+LIB		:=	-L./$(LIBDIR) -lft -lftprintf
 CACHEF	:=	.cache_exists
 # ====================
 
@@ -62,13 +66,13 @@ CYAN		= "\033[0;36m"
 WHITE		= "\033[0;37m"
 # ====================
 
-.PHONY: all norme clean fclean re link_malloc
+.PHONY: all libft norme clean fclean re link_malloc
 .SILENT:
 
-all: $(NAME)
+all: libft $(NAME) link_malloc
 
 $(NAME): $(OBJ)
-	$(CC) $(SOFLAGS) $(CFLAGS) $(OBJ) -o $@ $(INC)
+	$(CC) $(SOFLAGS) $(CFLAGS) $(OBJ) -o $@ $(LIB) $(INC)
 	echo $(GREEN)" $@ compiled !"$(EOC)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
@@ -82,20 +86,23 @@ $(CACHEF):
 %.c:
 	printf $(RED)"Missing file : $@\n"$(EOC)
 
+libft:
+	make -C $(LIBFT)
+
 link_malloc:
-	echo $(HOSTTYPE)
-	ln -s libft_malloc_$(HOSTTYPE).so $(NAME)
+	ln -s $(NAME) $(MALLOCLIB)
 
 norme:
 	norminette $(SRCDIR) $(INCDIR) | grep -v Norme -B1 || true
 	norminette $(LIBFT)$(SRCDIR) $(LIBFT)$(INCDIR) | grep -v Norme -B1 || true
 
 clean:
+	make clean -C $(LIBFT)
 	rm -rf $(OBJDIR) $(CACHEF) $(RESULTF)
 	printf $(YELLOW)"All objects removed\n"$(EOC)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(MALLOCLIB)
 	printf $(RED)"$(NAME) removed\n"$(EOC)
 
 re: fclean all

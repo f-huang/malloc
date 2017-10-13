@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 15:52:10 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/12 19:38:08 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/13 13:29:26 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static void	test_malloc_and_free(void)
 	ptr5 = malloc(4000);
 
 	show_alloc_mem();
-	printf("[0] %p\n[1] %p\n[2] %p\n[3] %p\n[4] %p\n[5] %p\n\n", ptr0, ptr1, ptr2, ptr3, ptr4, ptr5);
+	printf("----------\n");
+	// printf("[0] %p\n[1] %p\n[2] %p\n[3] %p\n[4] %p\n[5] %p\n\n", ptr0, ptr1, ptr2, ptr3, ptr4, ptr5);
 
 	free(ptr0);
 	free(ptr1);
 	free(ptr2);
 	free(ptr3);
 	free(ptr5);
-	ptr3 = malloc(55610);
 	free(ptr4);
 	show_alloc_mem();
 	// printf("[0] %p\n[1] %p\n[2] %p\n[3] %p\n[4] %p\n[5] %p\n\n", ptr0, ptr1, ptr2, ptr3, ptr4, ptr5);
@@ -63,8 +63,8 @@ static void	test_realloc(void)
 	ptr3 = malloc(128);
 	ptr4 = malloc(1024);
 	// ptr5 = malloc(1025);
-
-	printf("[0] %p\n[1] %p\n[2] %p\n[3] %p\n[4] %p\n[5] %p\n", ptr0, ptr1, ptr2, ptr3, ptr4, ptr5);
+	show_alloc_mem();
+	// printf("[0] %p\n[1] %p\n[2] %p\n[3] %p\n[4] %p\n[5] %p\n", ptr0, ptr1, ptr2, ptr3, ptr4, ptr5);
 
 	ptr0 = realloc(ptr0, 10);
 	ptr1 = realloc(ptr1, 128);
@@ -74,13 +74,15 @@ static void	test_realloc(void)
 	// ptr5 = realloc(ptr5, 100);
 	// ptr6 = realloc(ptr5, 2000);
 	show_alloc_mem();
-	printf("[0] %p\n[1] %p\n[2] %p\n[3] %p\n[4] %p\n[5] %p\n[6] %-20p\n", ptr0, ptr1, ptr2, ptr3, ptr4, ptr5, ptr6);
+	// printf("[0] %p\n[1] %p\n[2] %p\n[3] %p\n[4] %p\n[5] %p\n[6] %-20p\n", ptr0, ptr1, ptr2, ptr3, ptr4, ptr5, ptr6);
 	free(ptr6);
+	show_alloc_mem();
 }
 
 int		main(void)
 {
-	// test_malloc_and_free();
+	test_malloc_and_free();
 	test_realloc();
+	while (1);
 	return (0);
 }

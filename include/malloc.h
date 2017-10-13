@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 12:10:57 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/12 17:17:01 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/13 13:15:45 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct		s_chunk
 {
 	int					is_used;
 	size_t				size;
+	enum e_chunk_type	type;
 	struct s_chunk		*next;
 }					t_chunk;
 
@@ -56,12 +57,12 @@ void				show_alloc_mem();
 void				chunk_add(void *ptr, size_t size);
 void				chunk_remove(t_chunk **list, t_chunk *needle);
 
-t_chunk				*find_chunk(t_chunk *list, t_chunk *needle);
+t_chunk				*find_chunk(t_chunk *list, void *ptr);
 
 enum e_chunk_type	get_chunk_type(size_t size);
 t_chunk				*get_last_chunk(t_chunk *list);
 enum e_type_index	get_type_index(enum e_chunk_type type);
-t_chunk				*get_unused_chunk(enum e_chunk_type type);
+t_chunk				*get_unused_chunk(enum e_chunk_type type, size_t size);
 
 void				print_chunk_list(t_chunk *list);
 

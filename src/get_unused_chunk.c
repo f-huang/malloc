@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 13:28:23 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/12 19:19:46 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/13 13:17:05 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern void		*g_memory[3];
 
-t_chunk	*get_unused_chunk(enum e_chunk_type type)
+t_chunk	*get_unused_chunk(enum e_chunk_type type, size_t size)
 {
 	enum e_type_index	i;
 	t_chunk				*iterator;
@@ -23,7 +23,9 @@ t_chunk	*get_unused_chunk(enum e_chunk_type type)
 	iterator = (t_chunk*)g_memory[i];
 	while (iterator)
 	{
-		if (!iterator->is_used && iterator->size == type)
+		if (!iterator->is_used &&\
+			((iterator->type == type && type != LARGE) ||\
+			(iterator->size == size)))
 			return (iterator);
 		iterator = iterator->next;
 	}

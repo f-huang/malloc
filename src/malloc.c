@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/05 14:48:00 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/12 19:12:30 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/13 13:20:59 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,22 @@
 extern void		*g_memory[3];
 void	*malloc(size_t size)
 {
-	void				*ptr;
+	t_chunk				*ptr;
 	enum e_chunk_type	type;
 
 	if (size == 0)
 		return (NULL);
 	ptr = NULL;
 	type = get_chunk_type(size);
-	if (type == LARGE || !(ptr = get_unused_chunk(type)))
+	if (type == LARGE || !(ptr = get_unused_chunk(type, size)))
 		allocate_memory(size);
-	ptr = get_unused_chunk(type == LARGE ? size : type);
+	if (!ptr)
+		ptr = get_unused_chunk(type, size);
 	if (ptr)
-		((t_chunk*)ptr)->is_used = 1;
-	return (ptr);
+	{
+		ptr->size = size;
+		ptr->is_used = 1;
+		return (ptr + 1);
+	}
+	return (NULL);
 }

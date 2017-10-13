@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 17:12:46 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/12 19:09:56 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/13 10:49:35 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_chunk_list(t_chunk *list)
 	while (iterator)
 	{
 		if (iterator->is_used || iterator->size > SMALL)
-			printf("%p (%zu)\n", iterator, iterator ? iterator->size : 0);
+			printf("{%p} ptr = %p (%zu)\n", iterator, iterator + 1, iterator ? iterator->size : 0);
 		iterator = iterator->next;
 	}
 }
