@@ -6,7 +6,7 @@
 #    By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 15:45:39 by fhuang            #+#    #+#              #
-#    Updated: 2017/10/13 13:38:21 by fhuang           ###   ########.fr        #
+#    Updated: 2017/10/13 14:48:20 by fhuang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ MALLOCLIB	:=	libft_malloc.so
 # ===== Standard =====
 CC		:=	clang -pipe
 CFLAGS	:=	-Wall -Wextra -Werror -g3
-INDEPFLAGS	:= -fPIC
 SOFLAGS	:=	-shared
 SRCDIR	:=	src/
 OBJDIR	:=	obj/
@@ -43,12 +42,11 @@ SRC		:=	$(SRCDIR)allocate_memory.c			\
 			$(SRCDIR)get_type_name.c			\
 			$(SRCDIR)get_unused_chunk.c			\
 			$(SRCDIR)malloc.c					\
-			$(SRCDIR)print_chunk_list.c			\
 			$(SRCDIR)realloc.c					\
 			$(SRCDIR)show_alloc_mem.c
 OBJ		:=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 INC		:=	-I./$(INCDIR) -I./$(LIBFT)$(INCDIR)
-LIB		:=	-L./$(LIBDIR) -lft -lftprintf
+LIB		:=	-lpthread -L./$(LIBDIR) -lft -lftprintf
 CACHEF	:=	.cache_exists
 # ====================
 
@@ -76,7 +74,7 @@ $(NAME): $(OBJ)
 	echo $(GREEN)" $@ compiled !"$(EOC)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(CACHEF)
-	$(CC) $(CFLAGS) $(INDEPFLAGS) -c $< -o $@ $(INC)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 	printf $(GREEN)"|"$(EOC)
 
 $(CACHEF):
@@ -90,6 +88,7 @@ libft:
 	make -C $(LIBFT)
 
 link_malloc:
+	rm -f $(MALLOCLIB)
 	ln -s $(NAME) $(MALLOCLIB)
 
 norme:

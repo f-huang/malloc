@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/05 18:43:14 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/13 13:18:15 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/13 14:29:44 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	free(void *ptr)
 			to_free = find_chunk(g_memory[iTINY], ptr);
 	if (to_free)
 	{
-		// printf("FREEED --> %p (%lu)\n", to_free, to_free ? to_free->size : 0);
 		to_free->is_used = 0;
 		to_free->size = 0;
 		if (to_free->size > SMALL)
