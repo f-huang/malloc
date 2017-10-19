@@ -6,12 +6,11 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/05 18:42:20 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/19 11:22:20 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 18:08:21 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-#include <stdio.h>
 
 static void	copy_content(void **dst, const void *src, size_t n)
 {
@@ -32,31 +31,21 @@ static void	copy_content(void **dst, const void *src, size_t n)
 void	*realloc(void *ptr, size_t size)
 {
 	t_chunk		*to_realloc;
-	void		*ptr_copy;
 	t_chunk		*tmp;
 	size_t		size_to_allocate;
 
-printf("realloc : %p - %zu\n", ptr, size);
 	if (!ptr)
 		return (malloc(size));
-	if (!(to_realloc = find_chunk(g_memory[iLARGE], ptr)))
-		if (!(to_realloc = find_chunk(g_memory[iSMALL], ptr)))
-			if (!(to_realloc = find_chunk(g_memory[iTINY], ptr)))
-				return (malloc(size));
+	if (!(to_realloc = find_chunk(ptr)))
+		return (NULL);
 	size_to_allocate = (!size ? 1 : size);
 	if (size == 0 || to_realloc->size < size)
 	{
 		tmp = to_realloc;
-		to_realloc = malloc(size_to_allocate);
-		ptr_copy = to_realloc + 1;
-		copy_content(&ptr_copy, tmp, size_to_allocate);
+		if ((to_realloc = malloc(size_to_allocate)))
+			copy_content((void**)&to_realloc, tmp + 1, tmp->size);
 		free(ptr);
 		tmp = NULL;
 	}
-	if (to_realloc)
-	{
-		to_realloc->is_used = 1;
-		return (to_realloc + 1);
-	}
-	return (NULL);
+	return (to_realloc);
 }

@@ -6,7 +6,7 @@
 #    By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 15:45:39 by fhuang            #+#    #+#              #
-#    Updated: 2017/10/19 11:37:40 by fhuang           ###   ########.fr        #
+#    Updated: 2017/10/19 18:05:52 by fhuang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC		:=	$(SRCDIR)allocate_memory.c			\
 			$(SRCDIR)chunk_remove.c				\
 			$(SRCDIR)chunk_add.c				\
 			$(SRCDIR)find_chunk.c				\
+			$(SRCDIR)find_chunk_in_memory_stack.c	\
 			$(SRCDIR)free.c						\
 			$(SRCDIR)get_chunk_type.c			\
 			$(SRCDIR)get_last_chunk.c			\

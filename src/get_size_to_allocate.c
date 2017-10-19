@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 15:44:00 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/12 19:20:21 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 14:29:16 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ size_t	get_size_to_allocate(size_t size)
 	type = get_chunk_type(size);
 	total_size = (type == LARGE ?\
 		size + sizeof(t_chunk) :\
-		(type + sizeof(t_chunk)) * 100);
+		(type + sizeof(t_chunk)) * NUMBER_OF_LINKS);
 	return (get_closest_multiple(total_size));
 }

@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 11:48:08 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/19 11:44:53 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 13:12:58 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ char				**ft_tabndup(char **tab, int n);
 char				*ft_itoa(int n);
 char				*ft_itoa_base(int n, int base);
 size_t				ft_nbrlen(int n);
+size_t				ft_nbrlen_base(unsigned long long n, int base);
 unsigned int		ft_power_pos(unsigned int n, unsigned int p);
 
 /*

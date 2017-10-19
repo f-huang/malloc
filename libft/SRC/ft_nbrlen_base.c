@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_unused_chunk.c                                 :+:      :+:    :+:   */
+/*   ft_nbrlen_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 13:28:23 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/19 18:08:53 by fhuang           ###   ########.fr       */
+/*   Created: 2017/10/19 13:11:52 by fhuang            #+#    #+#             */
+/*   Updated: 2017/10/19 13:13:23 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include <stddef.h>
 
-extern void		*g_memory[3];
-
-t_chunk	*get_unused_chunk(enum e_chunk_type type, size_t size)
+size_t		ft_nbrlen_base(unsigned long long n, int base)
 {
-	enum e_type_index	i;
-	t_chunk				*iterator;
+	size_t		size;
 
-	i = get_type_index(type);
-	iterator = (t_chunk*)g_memory[i];
-	while (iterator)
+	size = 1;
+	while (n / base)
 	{
-		if (!iterator->is_used &&\
-			((iterator->type == type && type != LARGE) ||\
-			(iterator->size == size)))
-			return (iterator);
-		iterator = iterator->next;
+		n /= base;
+		size++;
 	}
-	return (iterator);
+	return (size);
 }

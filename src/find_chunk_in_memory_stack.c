@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_unused_chunk.c                                 :+:      :+:    :+:   */
+/*   find_chunk_in_memory_stack.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/12 13:28:23 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/19 18:08:53 by fhuang           ###   ########.fr       */
+/*   Created: 2017/10/19 18:03:29 by fhuang            #+#    #+#             */
+/*   Updated: 2017/10/19 18:07:31 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-extern void		*g_memory[3];
-
-t_chunk	*get_unused_chunk(enum e_chunk_type type, size_t size)
+t_chunk	*find_chunk_in_memory_stack(t_chunk *list, void *ptr)
 {
-	enum e_type_index	i;
-	t_chunk				*iterator;
+	t_chunk	*iterator;
 
-	i = get_type_index(type);
-	iterator = (t_chunk*)g_memory[i];
-	while (iterator)
+	iterator = list;
+	while (ptr && iterator)
 	{
-		if (!iterator->is_used &&\
-			((iterator->type == type && type != LARGE) ||\
-			(iterator->size == size)))
+		if (iterator + 1 == ptr)
 			return (iterator);
 		iterator = iterator->next;
 	}
-	return (iterator);
+	return (NULL);
 }

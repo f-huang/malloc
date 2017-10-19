@@ -6,13 +6,12 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/05 18:43:14 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/13 14:29:44 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 18:08:40 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/mman.h>
 #include "malloc.h"
-#include <stdio.h>
+
 extern void		*g_memory[3];
 
 void	free(void *ptr)
@@ -21,14 +20,12 @@ void	free(void *ptr)
 
 	if (!ptr)
 		return ;
-	if (!(to_free = find_chunk(g_memory[iLARGE], ptr)))
-		if (!(to_free = find_chunk(g_memory[iSMALL], ptr)))
-			to_free = find_chunk(g_memory[iTINY], ptr);
+	to_free = find_chunk(ptr);
 	if (to_free)
 	{
 		to_free->is_used = 0;
 		to_free->size = 0;
-		if (to_free->size > SMALL)
+		if (to_free->type == LARGE)
 		{
 			chunk_remove((t_chunk**)&g_memory[iLARGE], to_free);
 		}

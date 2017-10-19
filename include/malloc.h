@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 12:10:57 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/13 13:15:45 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 18:07:41 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 # define STRINGIFY(x) #x
 # define TOSTRING(x) STRINGIFY(x)
+
+# define NUMBER_OF_LINKS 100
 
 enum				e_chunk_type
 {
@@ -57,7 +59,8 @@ void				show_alloc_mem();
 void				chunk_add(void *ptr, size_t size);
 void				chunk_remove(t_chunk **list, t_chunk *needle);
 
-t_chunk				*find_chunk(t_chunk *list, void *ptr);
+t_chunk				*find_chunk_in_memory_stack(t_chunk *list, void *ptr);
+t_chunk				*find_chunk(void *ptr);
 
 enum e_chunk_type	get_chunk_type(size_t size);
 t_chunk				*get_last_chunk(t_chunk *list);

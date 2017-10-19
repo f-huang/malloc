@@ -6,14 +6,14 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 12:14:41 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/13 13:17:33 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 18:08:25 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
 extern void	*g_memory[3];
-#include <stdio.h>
+
 static void chunk_link(t_chunk **chunk_list, void **ptr)
 {
 	t_chunk		*iterator;
@@ -26,9 +26,12 @@ static void chunk_link(t_chunk **chunk_list, void **ptr)
 		iterator = *chunk_list;
 	}
 	else
+	{
 		iterator->next = *ptr;
+		iterator = iterator->next;
+	}
 	i = 0;
-	while (i < 100)
+	while (i < NUMBER_OF_LINKS)
 	{
 		iterator->next = (t_chunk*)((unsigned char*)iterator +\
 							iterator->type + sizeof(t_chunk));
@@ -69,8 +72,8 @@ void	chunk_add(void *ptr, size_t size)
 	((t_chunk*)ptr)->type = type;
 	((t_chunk*)ptr)->is_used = 0;
 	((t_chunk*)ptr)->next = NULL;
-	if (size > SMALL)
+	if (type == LARGE)
 		chunk_add_single((t_chunk**)&g_memory[index], &ptr);
-	if (size == TINY || size == SMALL)
+	else if (type == TINY || type == SMALL)
 		chunk_link((t_chunk**)&g_memory[index], &ptr);
 }

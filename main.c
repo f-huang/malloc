@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 15:52:10 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/19 11:37:21 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 18:00:13 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,33 @@
 // #include <stdlib.h>
 #include <stdio.h>
 // #include <string.h>
+#include <unistd.h>
+#include <strings.h>
+
+#define M (1024 * 1024)
+
+void print(char *s)
+{
+	write(1, s, strlen(s));
+}
 
 static void	test_malloc_and_free(void)
 {
 	// printf("--------------------------___MALLOC___FREE___\n");
-	// void *ptr0 = NULL;
+	void *ptr0 = NULL;
 	void *ptr1 = NULL;
-	// void *ptr2 = NULL;
-	// void *ptr3 = NULL;
-	// void *ptr4 = NULL;
-	// void *ptr5 = NULL;
+	void *ptr2 = NULL;
+	void *ptr3 = NULL;
+	void *ptr4 = NULL;
+	void *ptr5 = NULL;
+	// printf("%p\n", ptr1);
+	ptr0 = malloc(0);
+	ptr1 = malloc(128);
 	ptr1 = realloc(ptr1, 20);
-	printf("%p\n", ptr1);
-	// ptr0 = malloc(0);
-	// ptr1 = malloc(128);
-	// ptr2 = malloc(1024);
-	// ptr3 = malloc(2);
-	// ptr4 = malloc(2000);
-	// ptr5 = malloc(4000);
+	ptr2 = malloc(1024);
+	ptr3 = malloc(2);
+	ptr4 = malloc(2000);
+	ptr5 = malloc(4000);
 	//
 	// show_alloc_mem();
 	// printf("----------\n");
@@ -80,9 +89,72 @@ static void	test_realloc(void)
 	show_alloc_mem();
 }
 
+static void	test()
+{
+	int		i;
+	void	*ptr;
+
+	i = 0;
+	while (i < 5000)
+	{
+		ptr = malloc(25);
+		// printf("%p\n", ptr);
+		++i;
+	}
+	show_alloc_mem();
+}
+
+static void	test0()
+{
+	int		i;
+
+	i = 0;
+	while (i < 1024)
+		++i;
+}
+
+static void	test1()
+{
+	int i;
+	char *addr;
+
+	i = 0;
+	while (i < 1024)
+	{
+		addr = (char*)malloc(1024);
+		addr[0] = 42;
+		i++;
+	}
+	// show_alloc_mem();
+}
+static void	test3()
+{
+	char *addr1;
+	char *addr3;
+
+	addr1 = (char*)malloc(16*M);
+	strcpy(addr1, "Bonjours\n");
+	print(addr1);
+	addr3 = (char*)realloc(addr1, 128*M);
+	addr3[127*M] = 42;
+	print(addr3);
+}
+
+static void	test4()
+{
+	char	*addr;
+
+	addr = malloc(16);
+	free(NULL);
+	free((void *)addr + 5);
+	if (realloc((void *)addr + 5, 10) == NULL)
+		print("Bonjours\n");
+}
+
 int		main(void)
 {
-	test_malloc_and_free();
+	test4();
+	// test_malloc_and_free();
 	// test_realloc();
 	// malloc(1024);
 	// malloc(1024 * 32);
