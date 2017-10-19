@@ -6,21 +6,20 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 12:14:41 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/19 18:08:25 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 18:34:53 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-extern void	*g_memory[3];
+extern void				*g_memory[3];
 
-static void chunk_link(t_chunk **chunk_list, void **ptr)
+static void	chunk_link(t_chunk **chunk_list, void **ptr)
 {
-	t_chunk		*iterator;
-	int			i;
+	t_chunk				*iterator;
+	int					i;
 
-	iterator = get_last_chunk(*chunk_list);
-	if (!iterator)
+	if (!(iterator = get_last_chunk(*chunk_list)))
 	{
 		*chunk_list = *ptr;
 		iterator = *chunk_list;
@@ -46,7 +45,7 @@ static void chunk_link(t_chunk **chunk_list, void **ptr)
 
 static void	chunk_add_single(t_chunk **chunk_list, void **ptr)
 {
-	t_chunk		*last_chunk;
+	t_chunk				*last_chunk;
 
 	last_chunk = get_last_chunk(*chunk_list);
 	if (!last_chunk)
@@ -61,7 +60,7 @@ static void	chunk_add_single(t_chunk **chunk_list, void **ptr)
 	}
 }
 
-void	chunk_add(void *ptr, size_t size)
+void		chunk_add(void *ptr, size_t size)
 {
 	enum e_type_index	index;
 	enum e_chunk_type	type;

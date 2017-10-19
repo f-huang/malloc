@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/05 18:42:20 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/19 18:08:21 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 18:36:08 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	copy_content(void **dst, const void *src, size_t n)
 {
-	size_t	i;
-	char	*dst_char;
-	char	*src_char;
+	size_t		i;
+	char		*dst_char;
+	char		*src_char;
 
 	dst_char = (char*)*dst;
 	src_char = (char*)src;
@@ -28,7 +28,7 @@ static void	copy_content(void **dst, const void *src, size_t n)
 	}
 }
 
-void	*realloc(void *ptr, size_t size)
+void		*realloc(void *ptr, size_t size)
 {
 	t_chunk		*to_realloc;
 	t_chunk		*tmp;
