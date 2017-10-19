@@ -6,10 +6,12 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/03 22:08:09 by fhuang            #+#    #+#             */
-/*   Updated: 2017/09/28 17:15:14 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 11:46:03 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include <unistd.h>
 #include "libft.h"
 
 static int	update_line_lfo(char **line, char **lfo)

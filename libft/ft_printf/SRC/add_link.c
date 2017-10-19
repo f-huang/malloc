@@ -27,7 +27,7 @@ static void		arglst_add(t_print **lst, t_print *new)
 		*lst = new;
 }
 
-void			add_link(t_env *e, t_print *new, bool arg)
+void			add_link(t_env *e, t_print *new, int arg)
 {
 	t_print		*link;
 	t_print		**lst;

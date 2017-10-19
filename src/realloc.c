@@ -6,12 +6,13 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/05 18:42:20 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/13 11:03:34 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 11:22:20 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 #include <stdio.h>
+
 static void	copy_content(void **dst, const void *src, size_t n)
 {
 	size_t	i;
@@ -35,6 +36,7 @@ void	*realloc(void *ptr, size_t size)
 	t_chunk		*tmp;
 	size_t		size_to_allocate;
 
+printf("realloc : %p - %zu\n", ptr, size);
 	if (!ptr)
 		return (malloc(size));
 	if (!(to_realloc = find_chunk(g_memory[iLARGE], ptr)))

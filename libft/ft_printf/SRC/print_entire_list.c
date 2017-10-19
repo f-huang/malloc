@@ -6,10 +6,12 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/17 15:57:02 by fhuang            #+#    #+#             */
-/*   Updated: 2016/08/25 18:47:03 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 11:50:09 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include <unistd.h>
 #include "ft_printf.h"
 
 static void		total_len(t_env *e, size_t *len)

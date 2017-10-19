@@ -6,20 +6,16 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/02 23:13:27 by fhuang            #+#    #+#             */
-/*   Updated: 2017/09/29 15:24:42 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 11:39:44 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
 # include <stdarg.h>
-# include <locale.h>
-# include <stdbool.h>
-# include <limits.h>
+# include <stddef.h>
+# include <inttypes.h>
 
 # include "libft.h"
 
@@ -105,7 +101,7 @@ typedef struct			s_print
 	t_var				u_var;
 	t_types				e_types;
 	char				c;
-	bool				flags[5];
+	int				flags[5];
 	int					len;
 	int					width;
 	int					precision;
@@ -131,13 +127,13 @@ int						ft_printf_fd(int fd, const char *format, ...);
 **	SMALL FUNCTIONS
 */
 
-char					*ft_printf_itoa_base(int n, int base, bool is_uin);
+char					*ft_printf_itoa_base(int n, int base, int is_uin);
 char					*ft_ctoa_base(
-							char n, int base, bool is_uin, bool *is_neg);
+							char n, int base, int is_uin, int *is_neg);
 char					*ft_stoa_base(
-							short n, int base, bool is_uin, bool *is_neg);
-char					*ft_ltoa_base(long n, int base, bool is_uin);
-char					*ft_lltoa_base(long long n, int base, bool is_uin);
+							short n, int base, int is_uin, int *is_neg);
+char					*ft_ltoa_base(long n, int base, int is_uin);
+char					*ft_lltoa_base(long long n, int base, int is_uin);
 
 /*
 **	ENV
@@ -150,8 +146,8 @@ void					destroy_env(t_env *e);
 **	LIST
 */
 
-void					add_link(t_env *e, t_print *new, bool arg);
-int						new_link(t_env *e, char *str, char *type, bool arg);
+void					add_link(t_env *e, t_print *new, int arg);
+int						new_link(t_env *e, char *str, char *type, int arg);
 
 /*
  **	PARSE FORMAT
@@ -169,15 +165,15 @@ void					no_type_conversion(t_print *link);
 **	TRANSFORM
 */
 void					transform_plus(t_print *link, char *str,\
-							int len, bool neg);
+							int len, int neg);
 void					transform_space(t_print *link, char *str,\
-							int len, bool neg);
+							int len, int neg);
 void					transform_hash(t_print *link, char *str,\
-							int len, bool neg);
+							int len, int neg);
 void					transform_minus(t_print *link, char *str,\
-							int len, bool neg);
+							int len, int neg);
 void					transform_zero(t_print *link, char *str,\
-							int len, bool neg);
+							int len, int neg);
 unsigned char			*transform_wstr(t_print *link, wchar_t *wstr);
 
 void					read_and_transform_arg(t_env *e);

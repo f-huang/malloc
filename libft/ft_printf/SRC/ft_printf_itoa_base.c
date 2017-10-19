@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/29 15:16:47 by fhuang            #+#    #+#             */
-/*   Updated: 2017/09/29 15:18:50 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 11:46:51 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ static int	count_n(unsigned int n, int base)
 	return (ret);
 }
 
-char		*ft_printf_itoa_base(int n, int base, bool is_uin)
+char		*ft_printf_itoa_base(int n, int base, int is_uin)
 {
 	const char			pattern[17] = "0123456789abcdef";
 	char				*ret;
 	unsigned int		uin;
 	int					len;
-	bool				neg;
+	int				neg;
 
 	neg = (base == 10 && n < 0) ? 1 : 0;
-	neg && is_uin == false ? ABS(n) : 1;
+	neg && is_uin == 0 ? ABS(n) : 1;
 	uin = (unsigned int)n;
 	len = count_n(uin, base);
 	if ((ret = ft_strnew(len)) == NULL)

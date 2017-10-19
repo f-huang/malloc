@@ -6,10 +6,11 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/13 16:57:27 by fhuang            #+#    #+#             */
-/*   Updated: 2016/07/09 14:53:02 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 11:49:43 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_printf.h"
 
 void		push_char_front(t_print *link, char *str, char c, int n)

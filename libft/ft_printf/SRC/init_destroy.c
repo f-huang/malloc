@@ -6,10 +6,11 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/09 23:31:30 by fhuang            #+#    #+#             */
-/*   Updated: 2016/07/12 01:01:44 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 11:49:08 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_printf.h"
 
 void		destroy_env(t_env *e)

@@ -6,11 +6,12 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 15:31:48 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/13 14:44:17 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 11:19:13 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
 #include "libft.h"
 #include "malloc.h"
 
@@ -44,7 +45,6 @@ void	show_alloc_mem(void)
 {
 	unsigned long long	total;
 
-	ft_printf("test\n");
 	total = 0;
 	print_memory(TINY, &total);
 	print_memory(SMALL, &total);

@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 15:52:10 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/13 14:51:14 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 11:37:21 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ static void	test_malloc_and_free(void)
 	// void *ptr3 = NULL;
 	// void *ptr4 = NULL;
 	// void *ptr5 = NULL;
-	//
+	ptr1 = realloc(ptr1, 20);
+	printf("%p\n", ptr1);
 	// ptr0 = malloc(0);
-	ptr1 = malloc(128);
+	// ptr1 = malloc(128);
 	// ptr2 = malloc(1024);
 	// ptr3 = malloc(2);
 	// ptr4 = malloc(2000);
@@ -42,7 +43,6 @@ static void	test_malloc_and_free(void)
 	// free(ptr3);
 	// free(ptr5);
 	// free(ptr4);
-	printf("la\n");
 	show_alloc_mem();
 	// printf("[0] %p\n[1] %p\n[2] %p\n[3] %p\n[4] %p\n[5] %p\n\n", ptr0, ptr1, ptr2, ptr3, ptr4, ptr5);
 }

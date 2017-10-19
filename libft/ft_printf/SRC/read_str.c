@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/06 13:32:13 by fhuang            #+#    #+#             */
-/*   Updated: 2016/07/12 02:36:15 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/19 11:47:23 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char		*no_type(t_env *e, char *str)
 	ptr = str;
 	if (*ptr == '^')
 	{
-		new_link(e, str, ++ptr, false);
+		new_link(e, str, ++ptr, 0);
 		return (ptr);
 	}
 	while (*ptr && (ft_isdigit(*ptr) || *ptr == '.' ||\
@@ -29,7 +29,7 @@ static char		*no_type(t_env *e, char *str)
 	{
 		return (ptr);
 	}
-	new_link(e, str, ptr, true);
+	new_link(e, str, ptr, 1);
 	return (++ptr);
 }
 
@@ -37,7 +37,7 @@ static int		check_for_percentage(t_env *e, char *str)
 {
 	if (*str && *str == '%')
 	{
-		new_link(e, (str - 1), str, false);
+		new_link(e, (str - 1), str, 0);
 		return (1);
 	}
 	return (0);
@@ -58,7 +58,7 @@ static char		*parse_format(t_env *e, char *str)
 		{
 			if (*ptr == TYPES_PAT[i])
 			{
-				if ((new_link(e, str, ptr, true)) == -1)
+				if ((new_link(e, str, ptr, 1)) == -1)
 					return (NULL);
 				return (++ptr);
 			}
@@ -72,7 +72,7 @@ static char		*parse_format(t_env *e, char *str)
 int				read_str(t_env *e, char *str)
 {
 	char	*ptr;
-	bool	boo;
+	int	boo;
 	char	*tmp;
 
 	ptr = str;
@@ -81,9 +81,9 @@ int				read_str(t_env *e, char *str)
 	{
 		if (*ptr == '%' || *ptr == '^')
 		{
-			boo = true;
+			boo = 1;
 			if ((int)(ptr - tmp))
-				new_link(e, tmp, ptr, false);
+				new_link(e, tmp, ptr, 0);
 			tmp = ptr;
 			if (*ptr == '%' && (ptr = parse_format(e, ++ptr)) == NULL)
 				ptr = no_type(e, ++tmp);
@@ -92,8 +92,8 @@ int				read_str(t_env *e, char *str)
 			tmp = ptr;
 		}
 		else
-			*(++ptr) == '\0' ? boo = false : boo;
+			*(++ptr) == '\0' ? boo = 0 : boo;
 	}
-	boo == false ? new_link(e, tmp, ptr, false) : 0;
+	boo == 0 ? new_link(e, tmp, ptr, 0) : 0;
 	return (0);
 }
