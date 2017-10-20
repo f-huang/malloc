@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 15:31:48 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/19 18:37:13 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/20 10:10:58 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "libft.h"
 #include "malloc.h"
 
-extern void		*g_memory[3];
+extern void				*g_memory[3];
+extern pthread_mutex_t	g_mutex;
 
 static void	print_long_base(long n, int base)
 {
@@ -81,9 +82,13 @@ void		show_alloc_mem(void)
 	unsigned long	total;
 
 	total = 0;
+	pthread_mutex_init(&g_mutex, NULL);
+	pthread_mutex_lock(&g_mutex);
 	print_memory(TINY, &total);
 	print_memory(SMALL, &total);
 	print_memory(LARGE, &total);
+	pthread_mutex_unlock(&g_mutex);
+	pthread_mutex_destroy(&g_mutex);
 	ft_putstr("Total : ");
 	print_long_base(total, 10);
 	print_octets_string(total);

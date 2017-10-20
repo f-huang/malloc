@@ -6,7 +6,7 @@
 /*   By: fhuang <fhuang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 12:10:57 by fhuang            #+#    #+#             */
-/*   Updated: 2017/10/19 18:07:41 by fhuang           ###   ########.fr       */
+/*   Updated: 2017/10/20 10:10:28 by fhuang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MALLOC_H
 
 # include <stddef.h>
+# include <pthread.h>
 
 # define STRINGIFY(x) #x
 # define TOSTRING(x) STRINGIFY(x)
@@ -43,6 +44,7 @@ typedef struct		s_chunk
 }					t_chunk;
 
 void				*g_memory[3];
+pthread_mutex_t		g_mutex;
 
 /*
 **		SUBJECT'S FUNCTIONS
